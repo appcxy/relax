@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Relax Js</title>
+</head>
+<body>
+
+
+<p class="className">className</p>
+<p id="idName">idName Content</p>
+	
+<script src="relax.js"></script>
+<script>
+// $(function(){
+	// console.log('dom is loaded');
+
+	$('#idName').test(function(){
+		// console.log(this);
+		// alert('333 fn');
+		// console.log(this);
+		console.log($(this), $(this).html());
+		console.log($(this)[0], $(this)[0].innerHTML);
+
+		var _this = $(this);
+
+		
+		setTimeout(function(){
+			_this.hide();
+			setTimeout(function(){
+				_this.show();
+			}, 1000 * 2);
+		}, 1000 * 2);
+	});
+
+	// $('#idName').test(function(){
+		// console.log(this);
+		// alert('333 fn');
+		// console.log(this, $(this));
+		// console.log(this, this[0], $(this));
+
+	// });
+
+	// console.log('!!!!', $('#idName').html());
+
+	// $('#domName2').alerts('id alert');
+	// $('domName3').alerts('label alert');
+// });
+</script>
+</body>
+</html>
