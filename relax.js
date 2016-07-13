@@ -13,38 +13,20 @@
 
 
 	var relax = function( selector ){
-		// console.log('new:', selector);
 		return new _relax().init( selector );
 	}
 
-	// console.log(relax, _relax);
+
 	function _relax(){
-		this.version = '1.0.0';
+		this.length = 0;
 	}
 
-	// relax.prototype = _relax.prototype;
+
 	_relax.prototype = {
 		constructor: relax,
 		init: function( selector ){
 			var self = this;
 			var arg = arguments;
-
-			// console.log(
-			// 	self.classOf(null),
-			// 	self.classOf(1),
-			// 	self.classOf(''),
-			// 	self.classOf(false),
-			// 	self.classOf({}),
-			// 	self.classOf([]),
-			// 	self.classOf(/./),
-			// 	self.classOf(new Date()),
-			// 	self.classOf(window),
-
-			// 	self.classOf(selector)
-			// );
-			// console.log(arguments);
-
-			// console.log('==============', selector, self.classOf(selector));
 
 			if( !selector ){
 				return this;
@@ -59,54 +41,69 @@
 			}
 
 			if( self.classOf(selector) === 'Object' ){
-				// selector[0] = selector[0];
 				return selector;
 			}
 
-			this.content = doc;
-			this.selector = selector;
-
+			self.content = doc;
+			self.selector = selector;
 			return self;
 		}
 
-		,alerts: function( param ){
-			alert(param);
-			return this;
-		}
-
 		,hide: function(){
-			this[0].style.display = 'none';
+			for( var _i = 0; _i < this.length; _i++ ){
+				this[_i].style.display = 'none';	
+			}
 			return this;
 		}
 
 		,show: function(){
-			this[0].style.display = 'block';
+			for( var _i = 0; _i < this.length; _i++ ){
+				this[_i].style.display = 'block';
+			}
 			return this;
 		}
 
-		,test: function(a){
+		,text: function(cont){
 			var self = this;
+			var _return = '';
 
-			if( self.classOf(a) === 'Function' ){
-				// console.log(this);
-				a.apply(self);
-				// console.log(self, self[0].innerHTML);
-				// self.innerHtml = "0px";
-				// alert(4);
+			if( !cont.trim() ){
+				for( var _i = 0; _i < this.length; _i++ ){
+					_return += self[_i].innerHTML;	
+				}
+			} else {
+				for( var _i = 0; _i < this.length; _i++ ){
+					self[_i].innerHTML = cont;	
+				}
+				_return = self;
 			}
-
-			if( self.classOf(a) === 'String' ){
-				alert(a);
-			}
-
-			return self;
+			return _return;
 		}
 
 		,html: function(cont){
 			var self = this;
+			var _return = '';
 
-			// console.log(self, self[0]);
-			return self[0].innerHTML;
+			if( !cont.trim() ){
+				for( var _i = 0; _i < this.length; _i++ ){
+					_return += self[_i].outerHTML;	
+				}
+			} else {
+				for( var _i = 0; _i < this.length; _i++ ){
+					self[_i].innerHTML = cont;	
+				}
+				_return = self;
+			}
+			return _return;
+		}
+
+		,eq: function(i){
+			this[0] = this[i];
+			for( var _i = 1; _i < this.length; _i++ ){
+				delete this[_i];
+			}
+			this.length = 1;
+			return this;
 		}
 
 		//get dom
@@ -116,12 +113,30 @@
 
 			switch( _type[0] ){
 				case '.':
-					// console.log('class get dom');
+					var _eleCls = document.getElementsByTagName('*');
+					var _pi = 0;
+
+					for( var _i = 0, _l = _eleCls.length; _i < _l; _i++ ){
+						if( _eleCls[_i].className == node.replace('.', '') ){
+							self[_pi] = _eleCls[_i];
+							_pi++;
+						}
+					}
+					self.length = _pi;					
 					break;
 
 				case '#':
-					var ele = doc.getElementById( node.replace('#', '') );
-					self[0] = ele;
+					var _eleId = doc.getElementById( node.replace('#', '') );
+					self[0] = _eleId;
+					self.length = 1;
+					break;
+
+				default:
+					var _eleOth = document.getElementsByTagName(node);
+					for( var _i = 0; _i < _eleOth.length; _i++ ){
+						self[_i] = _eleOth[_i];
+					}
+					self.length = _eleOth.length;
 					break;
 			}
 

@@ -7,7 +7,15 @@
 <body>
 
 
-<p class="className">className</p>
+<p class="className">className1</p>
+<p class="className">className2</p>
+
+<div class="abc">
+	<div class="ddd">
+		<em class="className">className3</em>
+	</div>
+</div>
+
 <p id="idName">idName Content</p>
 	
 <script src="relax.js"></script>
@@ -15,23 +23,12 @@
 // $(function(){
 	// console.log('dom is loaded');
 
-	$('#idName').test(function(){
-		// console.log(this);
-		// alert('333 fn');
-		// console.log(this);
-		console.log($(this), $(this).html());
-		console.log($(this)[0], $(this)[0].innerHTML);
+	// $('#idName').hide();
+	
+	
+var a = $('p').text(' d ');
 
-		var _this = $(this);
-
-		
-		setTimeout(function(){
-			_this.hide();
-			setTimeout(function(){
-				_this.show();
-			}, 1000 * 2);
-		}, 1000 * 2);
-	});
+	console.log(a);
 
 	// $('#idName').test(function(){
 		// console.log(this);
